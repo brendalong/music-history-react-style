@@ -19,7 +19,7 @@ class AddSongForm extends React.Component {
       desc: this.desc.value,
     }
 
-    this.props.addSong(song);
+    this.props.createSong(song);
     this.songForm.reset();
   }
 
