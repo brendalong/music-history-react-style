@@ -11,14 +11,6 @@ import Songs from './Songs';
 import createBrowserHistory from 'history/createBrowserHistory'
 import './App.css';
 
-import {
-  
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Container,
-  Row } from 'reactstrap';
 
 class App extends Component {
   constructor(props){
@@ -35,12 +27,12 @@ class App extends Component {
     this.authenticate = this.authenticate.bind(this);
     this.logoutApp = this.logoutApp.bind(this);
     this.changeURL = this.changeURL.bind(this);
-  } 
+  }
 
   componentDidMount () {
     console.log("componentDidMount");
     this.authListener = rebase.initializedApp.auth().onAuthStateChanged((user) =>{
-  
+
       if (user) {
         this.setState({
           authed: true,
@@ -61,7 +53,7 @@ class App extends Component {
     console.log("componentWillUnmount");
     this.authListener()
   }
-  
+
   authenticate(){
     console.log('App: calling autheticate for google');
     loginWithGoogle();
@@ -72,62 +64,68 @@ class App extends Component {
     logout();
   }
 
- 
-
   changeURL(newURL){
     console.log("here is change", newURL);
     //this.history.push('/songs');
-    let newStuff = withRouter(( history ) => {
+    withRouter(( history ) => {
        history.push('/songs');
     });
   }
 
+
   render() {
-    const logout = <button onClick={this.logout}>Log Out</button>;
+   //  const logout = <button onClick={this.logout}>Log Out</button>;
 
     return (
       <div>
         <BrowserRouter>
-        <div>
-          <Navbar expand="sm">
+
+         <div>
             <div className="container">
-              
-              <NavbarBrand>Music History with React, Rebase, Route, Firebase, Auth</NavbarBrand>
-              
-              <Nav>
-                <NavItem>
-                  <Link to="/" className="btn btn-primary">Home</Link>
-                </NavItem>
+                   <nav className="navbar navbar-expand navbar-dark bg-dark">
+               <div>Music History with React, Rebase, Route, Firebase, Auth</div>
 
-                {this.state.authed ?
-                <NavItem>
-                  <Link to="/songs" className="btn btn-primary">Songs</Link>
-                </NavItem>
-                : null}
-                </Nav>
+                  <ul className="nav nav-pills">
+                     <li className="nav-item">
+                        <Link to="/" className="btn btn-primary">Home</Link>
+                     </li>
 
-                <Nav>
+                  {this.state.authed ?
+                     <li className="nav-item">
+                        <Link to="/songs" className="btn btn-primary">Songs</Link>
+                     </li>
+                  : null}
+
+                  </ul>
+
+                      <div style={{width:'100%'}}>
                 {this.state.authed
-                  ? <span>
-                      <div>Welcome</div>
-                      <button
-                          onClick={() => {this.logoutApp()}} className="btn btn-secondary">Logout</button>
+                  ? <span >
+                     <div style={{ textAlign: 'right' }}>Welcome</div>
+                     <button onClick={() => {this.logoutApp()}} className="btn btn-secondary">Logout</button>
                           {/* <Redirect to="/songs"/> */}
                     </span>
-                    : <span>
-                        <div>Sign in to manage your songs</div>
-                        <Link to="/login" className="btn btn-primary">Login</Link>
-                        <button onClick={() => this.authenticate('google')} 
-                          className="btn btn-primary">Login Google</button>
-                        <Link to="/register" className="btn btn-secondary">Register</Link>
-                      </span>
+                  : <span>
+                     <div style={{ textAlign:'right' }}>Sign in to manage your songs</div>
+                        <ul className="nav nav-pills justify-content-end">
+                           <li>
+                              <Link to="/login" className="btn btn-primary">Login</Link>
+                           </li>
+                           <li>
+                              <Link to="/register" className="btn btn-secondary">Register</Link>
+                           </li>
+                           <li>
+                              <button onClick={() => this.authenticate('google')} className="btn btn-primary">Login Google</button>
+                           </li>
+                        </ul>
+                     </span>
                   }
-                </Nav>
-            </div>
-          </Navbar>
-          
-          <Container>
-           
+                </div>
+         </nav>
+         </div>
+
+             <div className="container">
+
               <Switch>
                 <Route path='/' exact component={Home} />
                 <Route authed={this.state.authed} path='/login' component={Login} />
@@ -136,15 +134,16 @@ class App extends Component {
                  {/* Need to fix changing of url after user registers */}
                 {this.state.authed ?
                   <Route authed={this.state.authed} path="/songs" children={props => <Songs user={this.state.uid} {...props} />} />
-                : <Route path='/' component={Home} /> } 
+                : <Route path='/' component={Home} /> }
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
-           
-          </Container>
+
           </div>
+         </div>
+
         </BrowserRouter>
       </div>
-    
+
     );
   }
 }

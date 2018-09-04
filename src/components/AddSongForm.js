@@ -3,7 +3,6 @@ import {
     Card,
     CardHeader,
     CardText,
-    CardBody,
     Label,
     Col } from 'reactstrap';
 
@@ -29,11 +28,11 @@ class AddSongForm extends React.Component {
     <Card>
       <form ref={(input) => this.songForm = input} className="song-edit" onSubmit={(e) => this.createSong(e)}>
       <CardHeader>Add A New Song</CardHeader>
-     
-       
+
+
             <Label>Title</Label>
             <input ref={(input) => this.title = input} type="text" placeholder="Title" />
-     
+
             <CardText><input ref={(input) => this.album = input} type="text" placeholder="Album" /></CardText>
             <CardText><input ref={(input) => this.artist = input} type="text" placeholder="Artist" /></CardText>
             <CardText><input ref={(input) => this.year = input} type="text" placeholder="Year" /></CardText>
@@ -44,7 +43,7 @@ class AddSongForm extends React.Component {
         </select></CardText>
         <div><textarea ref={(input) => this.desc = input} placeholder="Song Desc" ></textarea></div>
         <div><button type="submit">+ Add Song</button></div>
-       
+
       </form>
       </Card>
       </Col>

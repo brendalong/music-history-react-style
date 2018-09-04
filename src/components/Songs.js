@@ -7,7 +7,6 @@ import {
     CardBody,
     CardTitle,
     CardText,
-    CardSubtitle,
     Row,
     Col } from 'reactstrap';
 
@@ -115,11 +114,11 @@ class Songs extends Component{
 
         // query the firebase once for the user data
         userRef.once('value', (snapshot) => {
-        const data = snapshot.val() || {};
+        // const data = snapshot.val() || {};
         //snapshot - how does it look right now.
         this.setState({
           uid: userData,
-         
+
         });
       });
     }
@@ -129,10 +128,10 @@ class Songs extends Component{
 
         return(
             <div>
-            
+
             <Row>
             <Col xs="12">
-            Songs - only viewable by a logged in user 
+            Songs - only viewable by a logged in user
             </Col>
             </Row>
 
@@ -142,19 +141,19 @@ class Songs extends Component{
             </Col>
             </Row>
             <Row>
-          
+
             {Object.keys(this.state.songs).map(this.renderSongs)}
-          
+
             </Row>
-           
+
             <hr />
-           
+
             <Row>
-           
+
             <AddSongForm addSong={this.addSong}/>
-         
+
             </Row>
-           
+
             </div>
         )
     }
