@@ -22,5 +22,5 @@ yarn-error.log*
 
 /extras
 
-src/config/
+/src/config/
 
